@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
+from std_srvs.srv import Empty
 from math import pow,atan2,sqrt
 
 def pose_func(msg):
@@ -19,6 +20,10 @@ class ControlTurtlesim():
         rospy.loginfo(" Press CTRL+c to stop moving the Turtle")
 
         rospy.on_shutdown(self.shutdown)
+
+	rospy.wait_for_service('/reset')
+	res = rospy.ServiceProxy('/reset', Empty)
+	res()
 
     	sub=rospy.Subscriber('/turtle1/pose', Pose, pose_func)
 

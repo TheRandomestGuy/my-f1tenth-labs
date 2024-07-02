@@ -23,6 +23,10 @@ class ControlTurtlesim():
 
         rospy.on_shutdown(self.shutdown)
 
+	rospy.wait_for_service('/reset')
+	res = rospy.ServiceProxy('/reset', Empty)
+	res()
+
 	sub=rospy.Subscriber('/turtle1/pose', Pose, pose_func)
 
     	rospy.wait_for_service('/turtle1/set_pen')
