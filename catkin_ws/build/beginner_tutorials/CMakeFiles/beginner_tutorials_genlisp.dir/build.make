@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pascal/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/pascal/github/my-f1tenth-labs/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pascal/catkin_ws/build
+CMAKE_BINARY_DIR = /home/pascal/github/my-f1tenth-labs/catkin_ws/build
 
 # Utility rule file for beginner_tutorials_genlisp.
 
@@ -63,10 +63,10 @@ beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/build: beginner_tut
 .PHONY : beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/build
 
 beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/clean:
-	cd /home/pascal/catkin_ws/build/beginner_tutorials && $(CMAKE_COMMAND) -P CMakeFiles/beginner_tutorials_genlisp.dir/cmake_clean.cmake
+	cd /home/pascal/github/my-f1tenth-labs/catkin_ws/build/beginner_tutorials && $(CMAKE_COMMAND) -P CMakeFiles/beginner_tutorials_genlisp.dir/cmake_clean.cmake
 .PHONY : beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/clean
 
 beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/depend:
-	cd /home/pascal/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pascal/catkin_ws/src /home/pascal/catkin_ws/src/beginner_tutorials /home/pascal/catkin_ws/build /home/pascal/catkin_ws/build/beginner_tutorials /home/pascal/catkin_ws/build/beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/pascal/github/my-f1tenth-labs/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pascal/github/my-f1tenth-labs/catkin_ws/src /home/pascal/github/my-f1tenth-labs/catkin_ws/src/beginner_tutorials /home/pascal/github/my-f1tenth-labs/catkin_ws/build /home/pascal/github/my-f1tenth-labs/catkin_ws/build/beginner_tutorials /home/pascal/github/my-f1tenth-labs/catkin_ws/build/beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : beginner_tutorials/CMakeFiles/beginner_tutorials_genlisp.dir/depend
 
