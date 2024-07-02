@@ -44,16 +44,16 @@ class ControlTurtlesim():
 	sp(off=False)
 	cbg = rospy.ServiceProxy('/clear', Empty)
 
-	rospy.set_param('/turtlesim/background_b', 0)
-	rospy.set_param('/turtlesim/background_g', 0)
-	rospy.set_param('/turtlesim/background_r', 255)
-	cbg()
-
         self.cmd_vel = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=60)
         rate = rospy.Rate(60);
         rospy.loginfo("Set rate 60Hz")
 
 	side_l = input('Enter Side Length (in range 1 to 5): ')
+
+	rospy.set_param('/turtlesim/background_b', 0)
+	rospy.set_param('/turtlesim/background_g', 0)
+	rospy.set_param('/turtlesim/background_r', 255)
+	cbg()
 
         move_cmd = Twist()
 

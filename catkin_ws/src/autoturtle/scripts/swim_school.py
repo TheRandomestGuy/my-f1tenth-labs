@@ -53,8 +53,6 @@ class ControlTurtlesim():
 		startx = pose_x	
 
 	    temp = sqrt(pow(pose_x - startx, 2) + pow(pose_y - starty, 2))
-	    
-	    rospy.loginfo(temp)
 
 	    if temp-temp2 > 0 and temp < 0.5 and prev == False:
 		ang_vz = -ang_vz
