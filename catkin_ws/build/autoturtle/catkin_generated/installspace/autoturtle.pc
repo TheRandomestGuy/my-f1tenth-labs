@@ -1,4 +1,4 @@
-prefix=/home/pascal/github/my-f1tenth-labs/catkin_ws/install
+prefix=/home/volta/github/my-f1tenth-labs/catkin_ws/install
 
 Name: autoturtle
 Description: Description of autoturtle

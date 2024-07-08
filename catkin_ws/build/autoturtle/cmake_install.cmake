@@ -1,8 +1,8 @@
-# Install script for directory: /home/pascal/github/my-f1tenth-labs/catkin_ws/src/autoturtle
+# Install script for directory: /home/volta/github/my-f1tenth-labs/catkin_ws/src/autoturtle
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/pascal/github/my-f1tenth-labs/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/volta/github/my-f1tenth-labs/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/pascal/github/my-f1tenth-labs/catkin_ws/build/autoturtle/catkin_generated/installspace/autoturtle.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/volta/github/my-f1tenth-labs/catkin_ws/build/autoturtle/catkin_generated/installspace/autoturtle.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/autoturtle/cmake" TYPE FILE FILES
-    "/home/pascal/github/my-f1tenth-labs/catkin_ws/build/autoturtle/catkin_generated/installspace/autoturtleConfig.cmake"
-    "/home/pascal/github/my-f1tenth-labs/catkin_ws/build/autoturtle/catkin_generated/installspace/autoturtleConfig-version.cmake"
+    "/home/volta/github/my-f1tenth-labs/catkin_ws/build/autoturtle/catkin_generated/installspace/autoturtleConfig.cmake"
+    "/home/volta/github/my-f1tenth-labs/catkin_ws/build/autoturtle/catkin_generated/installspace/autoturtleConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/autoturtle" TYPE FILE FILES "/home/pascal/github/my-f1tenth-labs/catkin_ws/src/autoturtle/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/autoturtle" TYPE FILE FILES "/home/volta/github/my-f1tenth-labs/catkin_ws/src/autoturtle/package.xml")
 endif()
 

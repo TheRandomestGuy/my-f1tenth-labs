@@ -7,7 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/pascal/github/my-f1tenth-labs/catkin_ws/devel:$CMAKE_PREFIX_PATH"
-export PWD='/home/pascal/github/my-f1tenth-labs/catkin_ws/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/pascal/github/my-f1tenth-labs/catkin_ws/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/pascal/github/my-f1tenth-labs/catkin_ws/src:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH="/home/volta/github/my-f1tenth-labs/catkin_ws/devel:$CMAKE_PREFIX_PATH"
+export PWD='/home/volta/github/my-f1tenth-labs/catkin_ws/build'
+export ROSLISP_PACKAGE_DIRECTORIES="/home/volta/github/my-f1tenth-labs/catkin_ws/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/volta/github/my-f1tenth-labs/catkin_ws/src:$ROS_PACKAGE_PATH"

@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/beginner_tutorials_generate_messages_py"
-  "/home/pascal/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/msg/_Num.py"
-  "/home/pascal/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/srv/_AddTwoInts.py"
-  "/home/pascal/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/msg/__init__.py"
-  "/home/pascal/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/srv/__init__.py"
+  "/home/volta/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/msg/_Num.py"
+  "/home/volta/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/srv/_AddTwoInts.py"
+  "/home/volta/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/msg/__init__.py"
+  "/home/volta/github/my-f1tenth-labs/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/srv/__init__.py"
 )
 
 # Per-language clean rules from dependency scanning.
