@@ -133,6 +133,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/volta/github/my-f1tenth-labs/catkin_ws/build/gtest/cmake_install.cmake")
   include("/home/volta/github/my-f1tenth-labs/catkin_ws/build/autoturtle/cmake_install.cmake")
   include("/home/volta/github/my-f1tenth-labs/catkin_ws/build/beginner_tutorials/cmake_install.cmake")
+  include("/home/volta/github/my-f1tenth-labs/catkin_ws/build/race/cmake_install.cmake")
 
 endif()
 

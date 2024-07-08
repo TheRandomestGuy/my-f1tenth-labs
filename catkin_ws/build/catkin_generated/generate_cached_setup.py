@@ -12,7 +12,7 @@ try:
     from catkin.environment_cache import generate_environment_script
 except ImportError:
     # search for catkin package in all workspaces and prepend to path
-    for workspace in '/home/volta/depend_ws/devel_isolated/vesc_driver;/home/volta/depend_ws/install_isolated;/opt/ros/melodic'.split(';'):
+    for workspace in '/home/volta/github/my-f1tenth-labs/catkin_ws/devel;/home/volta/depend_ws/devel_isolated/vesc_driver;/home/volta/depend_ws/install_isolated;/opt/ros/melodic'.split(';'):
         python_path = os.path.join(workspace, 'lib/python2.7/dist-packages')
         if os.path.isdir(os.path.join(python_path, 'catkin')):
             sys.path.insert(0, python_path)

@@ -7,3 +7,4 @@
 subdirs("gtest")
 subdirs("autoturtle")
 subdirs("beginner_tutorials")
+subdirs("race")
