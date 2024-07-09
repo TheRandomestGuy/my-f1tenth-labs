@@ -24,7 +24,10 @@ def getRange(data,angle):
     # Make sure to take care of NaNs etc.
     #pTODO: implement
 	swing = math.radians(angle + 30)
-	return data.ranges[int(swing * (len(data.ranges)/(math.pi * 4/3)))]
+	if math.isnan(data.ranges[int(swing * (len(data.ranges)/(math.pi * 4/3)))]):
+		return -1
+	else:
+		return data.ranges[int(swing * (len(data.ranges)/(math.pi * 4/3)))]
 
 
 
@@ -41,9 +44,11 @@ def callback(data):
 	## Your code goes here to determine the projected error as per the alrorithm
 	# Compute Alpha, AB, and CD..and finally the error.
 	# pTODO: implement
-
-	error = b * math.cos(math.atan2(a * math.cos(swing) - b, a * math.sin(swing))) + forward_projection * math.sin(math.atan2(a * math.cos(swing) - b, a * math.sin(swing)))
-	error = desired_distance - error
+	if a == -1 or b == -1:
+		error = 0
+	else:
+		error = b * math.cos(math.atan2(a * math.cos(swing) - b, a * math.sin(swing))) + forward_projection * math.sin(math.atan2(a * math.cos(swing) - b, a * math.sin(swing)))
+		error = desired_distance - error
 
 	msg = pid_input()	# An empty msg is created of the type pid_input
 	# this is the error that you want to send to the PID for steering correction.

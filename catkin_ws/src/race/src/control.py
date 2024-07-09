@@ -19,7 +19,7 @@ prev_error = 0.0
 # 25: Slow and steady
 # 35: Nice Autonomous Pace
 # > 40: Careful, what you do here. Only use this if your autonomous steering is very reliable.
-vel_input = 25.0	#nTODO
+vel_input = 30.0	#nTODO
 
 # Publisher for moving the car.
 # nTODO: Use the coorect topic /car_x/offboard/command. The multiplexer listens to this topic
@@ -49,7 +49,8 @@ def control(data):
 	#command.steering_angle = -steer_corr
 
 	# nTODO: Make sure the velocity is within bounds [0,100]
-	command.speed = min(max(vel_input, 0), 100)
+	vel_f = vel_input * 0.5 + (vel_input * 0.5 * (1-abs(min(max(-steer_corr, -100), 100))/100)) 	
+	command.speed = min(max(vel_f, 0), 100)
 
 	# Move the car autonomously
 	command_pub.publish(command)
