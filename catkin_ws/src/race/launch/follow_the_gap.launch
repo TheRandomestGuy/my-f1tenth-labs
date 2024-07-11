@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="race" name="ftg_control" type="ftg_control.py" output="screen"/>
+    <node pkg="race" name="gap_finder" type="gap_finder.py" output="screen"/>
+</launch>

@@ -20,7 +20,7 @@ prev_error = 0.0
 # 25: Slow and steady
 # 35: Nice Autonomous Pace
 # > 40: Careful, what you do here. Only use this if your autonomous steering is very reliable.
-vel_input = 30.0	#nTODO
+vel_input = 10.0	#nTODO
 
 # Publisher for moving the car.
 # nTODO: Use the coorect topic /car_x/offboard/command. The multiplexer listens to this topic
@@ -38,7 +38,7 @@ def control(data):
 	## Your PID code goes here
 	#pTODO: Use kp, ki & kd to implement a PID controller
 	# 1. Scale the error
-	error = 10 * data.pid_error
+	error = 2 * data.pid_error/math.pi * 10
 	# 2. Apply the PID equation on error to compute steering
 	steer_corr = kp * error + kd * (prev_error - error)
 	prev_error = error
@@ -50,8 +50,8 @@ def control(data):
 	#command.steering_angle = -steer_corr
 
 	# nTODO: Make sure the velocity is within bounds [0,100]
-	vel_f = vel_input * 0.5 + (vel_input * 0.5 * (1-abs(min(max(-steer_corr, -100), 100))/100)) 	
-	command.speed = min(max(vel_f, 0), 100)
+	vel_f = vel_input * 0.4 + (vel_input * 0.6 * math.pow((20 - min(abs(error) * 1.25, 20))/20, 2)) 	
+	command.speed = min(max(vel_f, 0), 100) * data.pid_vel
 
 	# Move the car autonomously
 	command_pub.publish(command)
