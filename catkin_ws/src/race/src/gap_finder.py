@@ -9,8 +9,9 @@ from race.msg import pid_input
 angle_range = 240	# Hokuyo 4LX has 240 degrees FoV for scan
 error = 0.0		# initialize the error
 car_length = 0.50 # Traxxas Rally is 20 inches or 0.5 meters. Useful variable.
-car_width = 0.65
+car_width = 0.3
 disparity_thres = 0.1
+min_gap_depth = 2.5
 
 # Handle to the publisher that will publish on the error topic, messages of the type 'pid_input'
 pub = rospy.Publisher('error', pid_input, queue_size=10)
@@ -42,14 +43,14 @@ def overwriteDisparities(data):
 			alter_scan[i] = 4
 	for i in disparities:
 		min_dist = min(alter_scan[i], alter_scan[i - 1])
-		min_dists.append(min_dist)
+		min_dists.append(min_dist - 0.1)
 		num_of_samples.append(int((car_width/(2.0 * min_dist)) * (len(data.ranges)/(math.pi * 4.0/3.0))))
 	for i in range(0, len(disparities)):
 		for j in range(max(disparities[i] - num_of_samples[i],0), min(disparities[i] + num_of_samples[i], len(alter_scan) - 1)):
 			alter_scan[j] = min(min_dists[i], alter_scan[j])
 	return alter_scan
 
-def find_gap_angle(data):
+def find_deep_gap_angle(data):
 	alter_scan = overwriteDisparities(data)
 	max_index = int(math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0)))
 	for i in range(int(math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0))), int(7.0*math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0)))):
@@ -57,13 +58,43 @@ def find_gap_angle(data):
 			max_index = i
 	return max_index/(len(alter_scan)/(math.pi * 4.0/3.0))
 
+def find_wide_gap_angle(data):
+	alter_scan = overwriteDisparities(data)
+	gap_start = []
+	gap_end = []
+	curr_gap = []
+	widest_start = int(4 * math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0)))
+	widest_end = int(4 * math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0)))
+	for i in range(int(math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0))), int(7.0*math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0)))):
+		if alter_scan[i] > min_gap_depth:
+			curr_gap.append(i)
+		else:
+			if len(curr_gap) > 10:
+				gap_start.append(curr_gap[0])
+				gap_end.append(curr_gap[-1])
+			curr_gap = []
+	if len(curr_gap) > 10:
+		gap_start.append(curr_gap[0])
+		gap_end.append(curr_gap[-1])
+	curr_gap = []
+	rospy.loginfo(gap_start)
+	#rospy.loginfo(gap_end)
+	for i in range(0, len(gap_start)):
+		if gap_end[i] - gap_start[i] > widest_end - widest_start:
+			widest_start = gap_start[i]
+			widest_end = gap_end[i]
+	#rospy.loginfo((widest_start)/(len(alter_scan)/(math.pi * 4.0/3.0)))
+	#rospy.loginfo((widest_end)/(len(alter_scan)/(math.pi * 4.0/3.0)))
+	return (0.5 * (widest_end + widest_start))/(len(alter_scan)/(math.pi * 4.0/3.0))
+
 
 
 
 def callback(data):
 	msg = pid_input()	# An empty msg is created of the type pid_input
 	# this is the error that you want to send to the PID for steering correction.
-	error = find_gap_angle(data) - math.pi * 2.0/3.0
+	#error = find_deep_gap_angle(data) - math.pi * 2.0/3.0
+	error = find_wide_gap_angle(data) - math.pi * 2.0/3.0
 	msg.pid_error = error
 	msg.pid_vel = min(2.0,overwriteDisparities(data)[int(4 * math.pi/6.0 * (len(data.ranges)/(math.pi * 4.0/3.0)))])/2		# velocity error can also be sent.
 	pub.publish(msg)

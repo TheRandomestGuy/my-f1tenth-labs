@@ -6,8 +6,8 @@ from ackermann_msgs.msg import AckermannDrive
 
 # PID Control Params
 
-kp = 15.0 #TODO
-kd = 0.1 #TODO
+kp = 20.0 #TODO
+kd = 0.3 #TODO
 ki = 0.0 #TODO
 servo_offset = 0.0	# zero correction offset in case servo is misaligned and has a bias in turning.
 prev_error = 0.0
@@ -50,8 +50,8 @@ def control(data):
 	#command.steering_angle = -steer_corr
 
 	# nTODO: Make sure the velocity is within bounds [0,100]
-	vel_f = vel_input * 0.4 + (vel_input * 0.6 * math.pow((20 - min(abs(error) * 1.25, 20))/20, 2)) 	
-	command.speed = min(max(vel_f, 0), 100) * data.pid_vel
+	vel_f = vel_input * 0.25 + (vel_input * 0.75 * math.pow((20 - min(abs(error) * 1.1, 20))/20, 2)) 	
+	command.speed = min(max(vel_f, 0), 100) #* (0.3 * data.pid_vel + 0.7)
 
 	# Move the car autonomously
 	command_pub.publish(command)
@@ -59,13 +59,13 @@ def control(data):
 if __name__ == '__main__':
 
     # This code tempalte asks for the values for the gains from the user upon start, but you are free to set them as ROS parameters as well.
-	global kp
-	global kd
-	global ki
+	#global kp
+	#global kd
+	#global ki
 	global vel_input
-	kp = input("Enter Kp Value: ")
-	kd = input("Enter Kd Value: ")
-	ki = input("Enter Ki Value: ")
+	#kp = input("Enter Kp Value: ")
+	#kd = input("Enter Kd Value: ")
+	#ki = input("Enter Ki Value: ")
 	vel_input = input("Enter desired velocity: ")
 	rospy.init_node('pid_controller', anonymous=True)
     # subscribe to the error topic
