@@ -46,12 +46,17 @@ def control(data):
 	command = AckermannDrive()
 
 	# nTODO: Make sure the steering value is within bounds [-100,100]
+	if data.pid_vel < 0.5:
+		steer_corr *= 100
 	command.steering_angle = min(max(-steer_corr, -100), 100)
 	#command.steering_angle = -steer_corr
 
 	# nTODO: Make sure the velocity is within bounds [0,100]
-	vel_f = vel_input * 0.25 + (vel_input * 0.75 * math.pow((20 - min(abs(error) * 1.1, 20))/20, 2)) 	
-	command.speed = min(max(vel_f, 0), 100) #* (0.3 * data.pid_vel + 0.7)
+	vel_f = vel_input * 0.25 + (vel_input * 0.75 * math.pow((20 - min(abs(error) * 1.1, 20))/20, 2)) 
+	if error == 0.0:
+		command.speed = min(max(vel_f, 0), 100) * (0.2 * data.pid_vel + 0.8) * 0.6
+	else:	
+		command.speed = min(max(vel_f, 0), 100) * (0.2 * data.pid_vel + 0.8)
 
 	# Move the car autonomously
 	command_pub.publish(command)
