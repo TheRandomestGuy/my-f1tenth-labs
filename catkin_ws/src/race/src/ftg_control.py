@@ -47,7 +47,7 @@ def control(data):
 	command = AckermannDrive()
 
 	# nTODO: Make sure the steering value is within bounds [-100,100]
-	if data.pid_vel < 0.5:
+	if data.pid_vel < 0.25:
 		steer_corr *= 100
 	command.steering_angle = min(max(-steer_corr, -100), 100)
 	#command.steering_angle = -steer_corr

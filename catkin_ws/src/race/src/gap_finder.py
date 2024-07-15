@@ -12,7 +12,7 @@ error = 0.0		# initialize the error
 car_length = 0.50 # Traxxas Rally is 20 inches or 0.5 meters. Useful variable.
 car_width = 0.35
 disparity_thres = 0.1
-min_gap_depth = 2
+min_gap_depth = 2.5
 
 # Handle to the publisher that will publish on the error topic, messages of the type 'pid_input'
 pub = rospy.Publisher('error', pid_input, queue_size=10)
@@ -71,28 +71,31 @@ def find_wide_gap_angle(data):
 		if alter_scan[i] > min_gap_depth:
 			curr_gap.append(i)
 		else:
-			if len(curr_gap) > 10:
+			if len(curr_gap) > 3:
 				gap_start.append(curr_gap[0])
 				gap_end.append(curr_gap[-1])
 			curr_gap = []
-	if len(curr_gap) > 10:
+	if len(curr_gap) > 3:
 		gap_start.append(curr_gap[0])
 		gap_end.append(curr_gap[-1])
 	curr_gap = []
 
-	if len(gap_start) == 0:
+	cnt = 0.2
+
+	while len(gap_start) == 0:
 		for i in range(int(math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0))), int(7.0*math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0)))):
-			if alter_scan[i] > min_gap_depth - 1:
+			if alter_scan[i] > min_gap_depth - cnt:
 				curr_gap.append(i)
 			else:
-				if len(curr_gap) > 10:
+				if len(curr_gap) > 3:
 					gap_start.append(curr_gap[0])
 					gap_end.append(curr_gap[-1])
 				curr_gap = []
-		if len(curr_gap) > 10:
+		if len(curr_gap) > 3:
 			gap_start.append(curr_gap[0])
 			gap_end.append(curr_gap[-1])
 		curr_gap = []
+		cnt += 0.2
 
 	#rospy.loginfo(gap_start)
 	#rospy.loginfo(gap_end)
@@ -102,6 +105,7 @@ def find_wide_gap_angle(data):
 			widest_end = gap_end[i]
 	#rospy.loginfo((widest_start)/(len(alter_scan)/(math.pi * 4.0/3.0)))
 	#rospy.loginfo((widest_end)/(len(alter_scan)/(math.pi * 4.0/3.0)))
+	rospy.loginfo(alter_scan[int(0.5 * (widest_end + widest_start))])
 	return (0.5 * (widest_end + widest_start))/(len(alter_scan)/(math.pi * 4.0/3.0))
 
 
