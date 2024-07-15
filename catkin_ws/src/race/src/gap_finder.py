@@ -10,9 +10,9 @@ from race.msg import pid_input
 angle_range = 240	# Hokuyo 4LX has 240 degrees FoV for scan
 error = 0.0		# initialize the error
 car_length = 0.50 # Traxxas Rally is 20 inches or 0.5 meters. Useful variable.
-car_width = 0.3
+car_width = 0.35
 disparity_thres = 0.1
-min_gap_depth = 2.5
+min_gap_depth = 2
 
 # Handle to the publisher that will publish on the error topic, messages of the type 'pid_input'
 pub = rospy.Publisher('error', pid_input, queue_size=10)
@@ -42,11 +42,11 @@ def overwriteDisparities(data):
 			alter_scan[i] = 7.0
 		if data.ranges[i] < 0.05:
 			disparities.append(i)
-			alter_scan[i] = 4
+			alter_scan[i] = 5
 	for i in disparities:
 		min_dist = min(alter_scan[i], alter_scan[i - 1])
-		min_dists.append(min_dist - 0.1)
-		num_of_samples.append(int((car_width/(2.0 * min_dist)) * (len(data.ranges)/(math.pi * 4.0/3.0))))
+		min_dists.append(min_dist)
+		num_of_samples.append(int((car_width/(2.0 * (min_dist))) * (len(data.ranges)/(math.pi * 4.0/3.0))))
 	for i in range(0, len(disparities)):
 		for j in range(max(disparities[i] - num_of_samples[i],0), min(disparities[i] + num_of_samples[i], len(alter_scan) - 1)):
 			alter_scan[j] = min(min_dists[i], alter_scan[j])
@@ -79,6 +79,21 @@ def find_wide_gap_angle(data):
 		gap_start.append(curr_gap[0])
 		gap_end.append(curr_gap[-1])
 	curr_gap = []
+
+	if len(gap_start) == 0:
+		for i in range(int(math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0))), int(7.0*math.pi/6.0 * (len(alter_scan)/(math.pi * 4.0/3.0)))):
+			if alter_scan[i] > min_gap_depth - 1:
+				curr_gap.append(i)
+			else:
+				if len(curr_gap) > 10:
+					gap_start.append(curr_gap[0])
+					gap_end.append(curr_gap[-1])
+				curr_gap = []
+		if len(curr_gap) > 10:
+			gap_start.append(curr_gap[0])
+			gap_end.append(curr_gap[-1])
+		curr_gap = []
+
 	#rospy.loginfo(gap_start)
 	#rospy.loginfo(gap_end)
 	for i in range(0, len(gap_start)):
