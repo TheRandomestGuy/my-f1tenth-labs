@@ -103,10 +103,16 @@ def find_wide_gap_angle(data):
 		if gap_end[i] - gap_start[i] > widest_end - widest_start:
 			widest_start = gap_start[i]
 			widest_end = gap_end[i]
+
+	max_ind = widest_end
+	for i in range (widest_start, widest_end):
+		if alter_scan[i] > alter_scan[max_ind]:
+			max_ind = i
+	
 	#rospy.loginfo((widest_start)/(len(alter_scan)/(math.pi * 4.0/3.0)))
 	#rospy.loginfo((widest_end)/(len(alter_scan)/(math.pi * 4.0/3.0)))
-	rospy.loginfo(alter_scan[int(0.5 * (widest_end + widest_start))])
-	return (0.5 * (widest_end + widest_start))/(len(alter_scan)/(math.pi * 4.0/3.0))
+	#rospy.loginfo(alter_scan[int(0.5 * (widest_end + widest_start))])
+	return 0.5 * (widest_end + widest_start)/(len(alter_scan)/(math.pi * 4.0/3.0))
 
 
 

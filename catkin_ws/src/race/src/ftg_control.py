@@ -54,7 +54,7 @@ def control(data):
 
 	# nTODO: Make sure the velocity is within bounds [0,100]
 	vel_i = min(2,data.pid_vel - 0.1)/2
-	vel_f = vel_input * 0.35 + (vel_input * 0.65 * math.pow((10 - min(abs(error), 10))/10, 2))
+	vel_f = vel_input * 0.25 + (vel_input * 0.75 * math.pow((10 - min(abs(error), 10))/10, 2))
 	if error == 0.0:
 		command.speed = min(max(vel_f * (0.5 * vel_i + 0.5) * 0.6, 0), 100)
 	else:	
