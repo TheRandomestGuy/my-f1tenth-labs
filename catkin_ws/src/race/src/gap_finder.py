@@ -3,6 +3,7 @@
 import rospy
 import math
 from sensor_msgs.msg import LaserScan
+from visualization_msgs.msg import Marker
 from race.msg import pid_input
 
 # Some useful variable declarations.
@@ -15,6 +16,7 @@ min_gap_depth = 2.5
 
 # Handle to the publisher that will publish on the error topic, messages of the type 'pid_input'
 pub = rospy.Publisher('error', pid_input, queue_size=10)
+vis_pub = rospy.Publisher( "/visualization_marker", Marker, queue_size=1)
 
 
 def findDisparities(data):
@@ -77,7 +79,7 @@ def find_wide_gap_angle(data):
 		gap_start.append(curr_gap[0])
 		gap_end.append(curr_gap[-1])
 	curr_gap = []
-	rospy.loginfo(gap_start)
+	#rospy.loginfo(gap_start)
 	#rospy.loginfo(gap_end)
 	for i in range(0, len(gap_start)):
 		if gap_end[i] - gap_start[i] > widest_end - widest_start:
@@ -95,9 +97,33 @@ def callback(data):
 	# this is the error that you want to send to the PID for steering correction.
 	#error = find_deep_gap_angle(data) - math.pi * 2.0/3.0
 	error = find_wide_gap_angle(data) - math.pi * 2.0/3.0
+
+	arrow = Marker()
+	arrow.header.frame_id = "car_8_base_link"
+	arrow.header.stamp = rospy.Time()
+	arrow.ns = "ns"
+	arrow.id = 0
+	arrow.type = Marker.ARROW
+	arrow.action = Marker.ADD
+	arrow.pose.position.x = 0
+	arrow.pose.position.y = 0
+	arrow.pose.position.z = 0
+	arrow.pose.orientation.x = 0
+	arrow.pose.orientation.y = 0
+	arrow.pose.orientation.z = math.sin(error/2)
+	arrow.pose.orientation.w = math.cos(error/2)
+	arrow.scale.x = overwriteDisparities(data)[int((error + math.pi * 2.0/3.0) * (len(data.ranges)/(math.pi * 4.0/3.0)))]
+	arrow.scale.y = 0.1
+	arrow.scale.z = 0.1
+	arrow.color.a = 1.0
+	arrow.color.r = 0.0
+	arrow.color.g = 1.0
+	arrow.color.b = 0.0
+
 	msg.pid_error = error
-	msg.pid_vel = min(2.0,overwriteDisparities(data)[int(4 * math.pi/6.0 * (len(data.ranges)/(math.pi * 4.0/3.0)))])/2		# velocity error can also be sent.
+	msg.pid_vel = overwriteDisparities(data)[int(4 * math.pi/6.0 * (len(data.ranges)/(math.pi * 4.0/3.0)))]		# velocity error can also be sent.
 	pub.publish(msg)
+	vis_pub.publish(arrow)
 
 
 if __name__ == '__main__':

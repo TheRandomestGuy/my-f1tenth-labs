@@ -38,6 +38,7 @@ def control(data):
 	## Your PID code goes here
 	#pTODO: Use kp, ki & kd to implement a PID controller
 	# 1. Scale the error
+
 	error = 2 * data.pid_error/math.pi * 10
 	# 2. Apply the PID equation on error to compute steering
 	steer_corr = kp * error + kd * (prev_error - error)
@@ -52,11 +53,12 @@ def control(data):
 	#command.steering_angle = -steer_corr
 
 	# nTODO: Make sure the velocity is within bounds [0,100]
+	vel_i = min(2.0,data.pid_vel)/2
 	vel_f = vel_input * 0.25 + (vel_input * 0.75 * math.pow((20 - min(abs(error) * 1.1, 20))/20, 2)) 
 	if error == 0.0:
-		command.speed = min(max(vel_f, 0), 100) * (0.2 * data.pid_vel + 0.8) * 0.6
+		command.speed = min(max(vel_f, 0), 100) * (0.2 * vel_i + 0.8) * 0.6
 	else:	
-		command.speed = min(max(vel_f, 0), 100) * (0.2 * data.pid_vel + 0.8)
+		command.speed = min(max(vel_f, 0), 100) * (0.2 * vel_i + 0.8)
 
 	# Move the car autonomously
 	command_pub.publish(command)
