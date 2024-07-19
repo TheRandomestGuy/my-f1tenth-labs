@@ -55,6 +55,7 @@ This algorithm consists of 2 nodes, gap_finder and ftg_control.
 ## Perception and Planning
 The perception and planning occurs in the gap_finder node. This node subscribes to the scan topic and uses the LIDAR data to find any edges by checking for jumps in depth. These edges are then extended according to the distance from the car to make up for the size of the car. 
 
-
+A gap is chosen by finding the widest gap with a certain depth. If no gap meets this depth the process is repeated with a lower requirement for a gap. The angle error for this gap is published to the error channel while a marker message used to visualize is published to the visualization_marker channel.
 
 ## Control
+The control node subscribes to the error channel and proportionally scales the error to the steering angle. Additionally, the dynamic speed control takes into account both the steering angle, which is based on error, and the distance to the obstacle infront of the vehicle. 
